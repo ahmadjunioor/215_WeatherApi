@@ -3,74 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informasi Cuaca Modern</title>
+    <title>Cuaca Elegan</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <style>
-        /* Desain CSS Modern */
+        /* Palet Warna & Font */
         :root {
-            --primary-color: #3498db; /* Biru */
-            --secondary-color: #2ecc71; /* Hijau */
-            --text-color: #333;
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
+            --primary-blue: #007bff; /* Biru Utama */
+            --secondary-color: #6c757d; /* Abu-abu Sekunder */
+            --bg-gradient-start: #e9ecef; /* Abu-abu terang untuk background */
+            --bg-gradient-end: #ffffff;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --detail-bg: #f8f9fa;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            padding: 40px;
-            color: var(--text-color);
+            font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            padding: 40px 20px;
+            color: #343a40;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
 
+        /* Kontrol Input */
         .header-control {
             margin-bottom: 30px;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 500px;
-            text-align: center;
+            max-width: 550px;
         }
 
         .header-control label {
             font-weight: 600;
             display: block;
             margin-bottom: 10px;
-            font-size: 1.1em;
+            font-size: 1em;
+            color: var(--secondary-color);
         }
 
         #inputLokasi {
-            padding: 10px 15px;
-            border: 2px solid #ddd;
+            padding: 12px 18px;
+            border: 1px solid #ced4da;
             border-radius: 8px;
             margin-right: 10px;
-            width: 60%;
-            transition: border-color 0.3s;
+            width: 65%;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         #inputLokasi:focus {
-            border-color: var(--primary-color);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             outline: none;
         }
 
         #getCuacaButton {
-            padding: 10px 20px;
-            background-color: var(--primary-color);
+            padding: 12px 25px;
+            background-color: var(--primary-blue);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             transition: background-color 0.3s, transform 0.1s;
         }
 
         #getCuacaButton:hover {
-            background-color: #2980b9;
+            background-color: #0056b3;
         }
         
         #getCuacaButton:active {
@@ -79,78 +86,97 @@
 
         /* Tampilan Data Cuaca (Card) */
         .weather-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            padding: 30px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 40px;
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             text-align: center;
+            opacity: 0; /* Mulai tersembunyi */
+            animation: fadeIn 0.8s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
-        /* Bagian Utama Suhu dan Kondisi */
+        /* Header Lokasi & Kondisi */
+        .location-header {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 5px;
+        }
+
+        .condition-meta {
+            font-size: 1em;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+        }
+
+        /* Bagian Utama Suhu */
         .main-info {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
         }
 
         .main-info img {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
         }
 
         .temperature {
-            font-size: 4em;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-left: 15px;
+            font-size: 5em;
+            font-weight: 300; /* Lebih tipis untuk elegan */
+            color: var(--primary-blue);
+            margin-left: 20px;
         }
-
-        .location-header {
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #2c3e50;
-        }
-
+        
         .condition-text {
-            font-size: 1.2em;
-            color: #7f8c8d;
-            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-top: -15px; /* Posisikan dekat suhu */
         }
 
-        /* Detail Grid */
+        /* Detail Grid (Data Tambahan) */
         .detail-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr); /* Tiga kolom */
+            gap: 20px;
             text-align: left;
         }
 
         .detail-item {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 3px solid var(--secondary-color);
+            background: var(--detail-bg);
+            padding: 15px;
+            border-radius: 10px;
+            transition: background-color 0.2s;
+            text-align: center;
         }
 
-        .detail-item span {
-            display: block;
+        .detail-item:hover {
+            background-color: #e2e6ea;
         }
 
         .detail-item .label {
-            font-size: 0.85em;
-            color: #7f8c8d;
-            margin-bottom: 3px;
+            font-size: 0.8em;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .detail-item .value {
-            font-weight: 600;
-            color: var(--text-color);
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #343a40;
         }
     </style>
 </head>
@@ -164,8 +190,8 @@
         </div>
     </div>
 
-    <div id="tampilan" class="weather-card">
-        <p style="color: #7f8c8d;">Masukkan lokasi dan klik **GET** untuk melihat info cuaca.</p>
+    <div id="tampilan" style="text-align: center;">
+        <p style="color: var(--secondary-color);">Masukkan lokasi dan klik **GET** untuk melihat info cuaca.</p>
     </div>
 
     <script>
@@ -173,17 +199,16 @@
         const API_KEY = "4a17f071e6da4747b0521512250710"; 
         const BASE_URL = "http://api.weatherapi.com/v1/current.json";
         
-        // Fungsi untuk mengambil data cuaca
         function getWeatherData() {
-            const lokasi = $("#inputLokasi").val().trim(); // Trim untuk hapus spasi
+            const lokasi = $("#inputLokasi").val().trim();
             if (lokasi === "") {
-                $("#tampilan").html("<p style='color: red;'>Lokasi tidak boleh kosong!</p>");
+                $("#tampilan").html("<p style='color: red; text-align: center;'>Lokasi tidak boleh kosong!</p>");
                 return;
             }
             
             const urlapi = `${BASE_URL}?key=${API_KEY}&q=${lokasi}&aqi=no`;
             
-            $("#tampilan").html("<p style='text-align: center;'>Memuat data...</p>");
+            $("#tampilan").removeClass("weather-card").html("<p style='text-align: center;'>Memuat data...</p>");
 
             $.ajax({
                 url: urlapi,
@@ -197,54 +222,55 @@
                     const kelembaban = data.current.humidity;
                     const lokasiNama = data.location.name;
                     const negara = data.location.country;
-                    const provinsi = data.location.region || 'N/A'; // Menggunakan || 'N/A' jika kosong
+                    const provinsi = data.location.region || 'N/A';
                     const longitude = data.location.lon;
                     const latitude = data.location.lat;
                     
                     // Membuat tampilan HTML dalam bentuk Card
                     const htmlContent = `
                         <div class="location-header">${lokasiNama}</div>
-                        <div class="condition-text">${provinsi}, ${negara}</div>
+                        <div class="condition-meta">${provinsi}, ${negara}</div>
                         
                         <div class="main-info">
                             <img src="http:${ikon}" alt="${cuaca}">
-                            <span class="temperature">${suhu}°C</span>
+                            <div>
+                                <span class="temperature">${suhu}°C</span>
+                                <div class="condition-text">${cuaca}</div>
+                            </div>
                         </div>
                         
                         <div class="detail-grid">
                             <div class="detail-item">
-                                <span class="label">Cuaca</span>
-                                <span class="value">${cuaca}</span>
-                            </div>
-                            <div class="detail-item">
                                 <span class="label">Kelembaban</span>
                                 <span class="value">${kelembaban}%</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="label">Longitude</span>
-                                <span class="value">${longitude}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Latitude</span>
                                 <span class="value">${latitude}</span>
                             </div>
                             <div class="detail-item">
-                                <span class="label">Kecamatan</span>
-                                <span class="value" style="color: red;">TIDAK TERSEDIA*</span>
+                                <span class="label">Longitude</span>
+                                <span class="value">${longitude}</span>
                             </div>
                             <div class="detail-item">
                                 <span class="label">Provinsi/Wilayah</span>
                                 <span class="value">${provinsi}</span>
                             </div>
+                            <div class="detail-item" style="border: 1px solid #ffc107; background-color: #fff3cd;">
+                                <span class="label">Kecamatan</span>
+                                <span class="value" style="color: #856404; font-size: 0.9em;">TIDAK TERSEDIA*</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Negara</span>
+                                <span class="value">${negara}</span>
+                            </div>
                         </div>
-                        <p style="font-size: 0.8em; color: #7f8c8d; margin-top: 20px;">*Kecamatan tidak tersedia di API cuaca ini.</p>
+                        <p style="font-size: 0.75em; color: var(--secondary-color); margin-top: 20px;">*Kecamatan tidak tersedia pada layanan API ini.</p>
                     `;
 
-                    $("#tampilan").html(htmlContent);
-                    $("#tampilan").addClass("weather-card"); // Pastikan class card diterapkan
+                    $("#tampilan").html(htmlContent).addClass("weather-card");
                 },
                 error: function(jqXHR) {
-                    // Menghilangkan class card pada error
                     $("#tampilan").removeClass("weather-card"); 
                     if (jqXHR.status === 400) {
                          $("#tampilan").html("<p style='color: red; text-align: center;'>❌ Lokasi **" + lokasi + "** tidak ditemukan. Harap masukkan nama kota atau wilayah yang valid.</p>");
@@ -255,17 +281,15 @@
             });
         }
 
-        // Event listener untuk tombol GET
+        // Event listener
         $("#getCuacaButton").on("click", getWeatherData);
-
-        // Opsi: Jalankan pencarian saat Enter ditekan di input
         $("#inputLokasi").on("keypress", function(e) {
             if (e.which === 13) {
                 getWeatherData();
             }
         });
         
-        // Panggil saat halaman pertama kali dimuat (memuat data default Yogyakarta)
+        // Memuat data default saat pertama kali
         getWeatherData(); 
     </script>
 </body>
